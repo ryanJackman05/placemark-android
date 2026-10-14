@@ -17,10 +17,14 @@ class ConfirmDialog (private val context: Context) {
         dialog.setContentView(R.layout.confirm_dialog)
 
         val header = dialog.findViewById<TextView>(R.id.headerText)
+        header.text = headerText
         val message = dialog.findViewById<TextView>(R.id.dialogText)
+        message.text = dialogText
 
         val confirmButton = dialog.findViewById<Button>(R.id.dialogConfirmButton)
+        confirmButton.text = confirmText
         val cancelButton = dialog.findViewById<Button>(R.id.dialogCancelButton)
+        cancelButton.text = cancelText;
 
         confirmButton.setOnClickListener {
             dialog.dismiss()
