@@ -29,7 +29,14 @@ class MarkListActivity : AppCompatActivity() {
                     editMark(mark)
                 }
                 override fun onMarkLongClick(mark: PlacemarkModel): Boolean {
-                    deleteMark(mark)
+
+                    ConfirmDialog(this@MarkListActivity).show( // set context as the parent activity
+                        "Delete Mark",
+                        "Delete this mark?"
+                    ){
+                        deleteMark(mark)
+                    }
+
                     return true
                 }
 
