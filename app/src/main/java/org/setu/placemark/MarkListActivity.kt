@@ -6,6 +6,7 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import timber.log.Timber
 
 class MarkListActivity : AppCompatActivity() {
 
@@ -82,6 +83,7 @@ class MarkListActivity : AppCompatActivity() {
 
     private fun deleteMark(mark: PlacemarkModel) {
 
+        Timber.d("Deleting mark id=${mark.id}, title=${mark.title}")
         AppData.placedMarks.delete(mark.id)
 
         adapter.updateMarks(

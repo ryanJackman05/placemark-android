@@ -6,9 +6,11 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import timber.log.Timber
 
 class AddEditActivity : AppCompatActivity() {
 
+    // 1 to 1 input fields with the add_edit view
     private lateinit var titleInput: EditText
     private lateinit var descriptionInput: EditText
     private lateinit var xInput: EditText
@@ -40,15 +42,17 @@ class AddEditActivity : AppCompatActivity() {
             findViewById<Button>(R.id.cancelButton)
 
         editingId =
-            intent.getLongExtra("id", -1L)
-                .takeIf { it != -1L }
+            intent.getLongExtra("id", -1L) // fetch extra value named id, will be present if this activity was called from editMark
+                .takeIf { it != -1L } // takeif is a handy inline function for conditional yesOrNull returning
 
         if (editingId != null) {
-
+            // Set to Edit mode
             findViewById<TextView>(R.id.formTitle)
                 .text = "Edit Mark"
 
             loadExistingMark(editingId!!)
+
+            Timber.d("Editing mark id=${editingId}")
         }
 
         saveButton.setOnClickListener {
@@ -122,6 +126,7 @@ class AddEditActivity : AppCompatActivity() {
             )
 
             AppData.placedMarks.create(mark)
+            Timber.d("Created mark id=${mark.id}, title=${mark.title}")
 
             Toast.makeText(
                 this,
@@ -140,6 +145,7 @@ class AddEditActivity : AppCompatActivity() {
             )
 
             AppData.placedMarks.update(mark)
+            Timber.d("Edited mark id=${mark.id}, title=${mark.title}")
 
             Toast.makeText(
                 this,
