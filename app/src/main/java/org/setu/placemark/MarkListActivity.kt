@@ -78,3 +78,14 @@ class MarkListActivity : AppCompatActivity() {
         )
     }
 }
+
+
+interface OnMarkListener { // interface for listeners to derive from
+
+    fun onMarkClick(mark: PlacemarkModel)
+
+    fun onMarkLongClick(mark: PlacemarkModel): Boolean
+
+}
+
+

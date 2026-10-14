@@ -9,8 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class PlacedMarkAdapter(
     private var marks: List<PlacemarkModel>,
-    private val onEdit: (PlacemarkModel) -> Unit,
-    private val onDelete: (PlacemarkModel) -> Unit
+    private val listener: OnMarkListener
 ) : RecyclerView.Adapter<PlacedMarkAdapter.MarkViewHolder>() {
 
     class MarkViewHolder(itemView: View) :
@@ -24,12 +23,6 @@ class PlacedMarkAdapter(
 
         val coordinatesText: TextView =
             itemView.findViewById(R.id.coordinatesText)
-
-        val editButton: Button =
-            itemView.findViewById(R.id.editButton)
-
-        val deleteButton: Button =
-            itemView.findViewById(R.id.deleteButton)
     }
 
     override fun onCreateViewHolder(
@@ -62,14 +55,6 @@ class PlacedMarkAdapter(
 
         holder.coordinatesText.text =
             "X: ${mark.x}, Y: ${mark.y}"
-
-        holder.editButton.setOnClickListener {
-            onEdit(mark)
-        }
-
-        holder.deleteButton.setOnClickListener {
-            onDelete(mark)
-        }
     }
 
     override fun getItemCount(): Int {
