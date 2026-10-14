@@ -23,12 +23,16 @@ class MarkListActivity : AppCompatActivity() {
         adapter = PlacedMarkAdapter(
             marks = AppData.placedMarks.findAll(),
 
-            onEdit = { mark ->
-                editMark(mark)
-            },
+            listener = object : OnMarkListener {
 
-            onDelete = { mark ->
-                deleteMark(mark)
+                override fun onMarkClick(mark: PlacemarkModel) {
+                    editMark(mark)
+                }
+                override fun onMarkLongClick(mark: PlacemarkModel): Boolean {
+                    deleteMark(mark)
+                    return true
+                }
+
             }
         )
 

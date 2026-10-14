@@ -55,6 +55,19 @@ class PlacedMarkAdapter(
 
         holder.coordinatesText.text =
             "X: ${mark.x}, Y: ${mark.y}"
+
+
+        // set view's listeners to the listener object's methods
+        // (i.e, trigger these methods when the itemView reports one of these click types.)
+        holder.itemView.setOnClickListener {
+            listener.onMarkClick(mark)
+        }
+
+        holder.itemView.setOnLongClickListener {
+            listener.onMarkLongClick(mark)
+        }
+
+
     }
 
     override fun getItemCount(): Int {
