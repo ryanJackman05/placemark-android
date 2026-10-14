@@ -6,6 +6,7 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import timber.log.Timber
 
 class MarkListActivity : AppCompatActivity() {
 
@@ -23,12 +24,23 @@ class MarkListActivity : AppCompatActivity() {
         adapter = PlacedMarkAdapter(
             marks = AppData.placedMarks.findAll(),
 
-            onEdit = { mark ->
-                editMark(mark)
-            },
+            listener = object : OnMarkListener {
 
-            onDelete = { mark ->
-                deleteMark(mark)
+                override fun onMarkClick(mark: PlacemarkModel) {
+                    editMark(mark)
+                }
+                override fun onMarkLongClick(mark: PlacemarkModel): Boolean {
+
+                    ConfirmDialog(this@MarkListActivity).show( // set context as the parent activity
+                        "Delete Mark",
+                        "Delete this mark?"
+                    ){
+                        deleteMark(mark)
+                    }
+
+                    return true
+                }
+
             }
         )
 
@@ -71,6 +83,7 @@ class MarkListActivity : AppCompatActivity() {
 
     private fun deleteMark(mark: PlacemarkModel) {
 
+        Timber.d("Deleting mark id=${mark.id}, title=${mark.title}")
         AppData.placedMarks.delete(mark.id)
 
         adapter.updateMarks(
@@ -78,3 +91,14 @@ class MarkListActivity : AppCompatActivity() {
         )
     }
 }
+
+
+interface OnMarkListener { // interface for listeners to derive from
+
+    fun onMarkClick(mark: PlacemarkModel)
+
+    fun onMarkLongClick(mark: PlacemarkModel): Boolean
+
+}
+
+
