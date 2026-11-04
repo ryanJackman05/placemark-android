@@ -1,9 +1,11 @@
 package org.setu.placemark
 
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
@@ -23,6 +25,9 @@ class PlacedMarkAdapter(
 
         val coordinatesText: TextView =
             itemView.findViewById(R.id.coordinatesText)
+
+        val markImage: ImageView =
+            itemView.findViewById(R.id.markImage)
     }
 
     override fun onCreateViewHolder(
@@ -56,6 +61,15 @@ class PlacedMarkAdapter(
         holder.coordinatesText.text =
             "X: ${mark.x}, Y: ${mark.y}"
 
+        val imageUri = mark.imageUri?.let { Uri.parse(it) }
+
+        if (imageUri != null) {
+            holder.markImage.setImageURI(imageUri)
+        } else {
+            holder.markImage.setImageResource(
+                android.R.drawable.ic_menu_gallery
+            )
+        }
 
         // set view's listeners to the listener object's methods
         // (i.e, trigger these methods when the itemView reports one of these click types.)
