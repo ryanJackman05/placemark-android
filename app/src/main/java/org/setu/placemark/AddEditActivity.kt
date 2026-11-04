@@ -114,6 +114,14 @@ class AddEditActivity : AppCompatActivity() {
         descriptionInput.setText(mark.description)
         xInput.setText(mark.x.toString())
         yInput.setText(mark.y.toString())
+        selectedImageUri = mark.imageUri?.let { Uri.parse(it) }
+
+        if (selectedImageUri != null) {
+            imagePreview.setImageURI(selectedImageUri)
+        } else {
+            imagePreview.setImageResource(android.R.drawable.ic_menu_gallery)
+        }
+
     }
 
     private fun saveMark() {
@@ -151,7 +159,8 @@ class AddEditActivity : AppCompatActivity() {
                 title = title,
                 description = description,
                 x = x,
-                y = y
+                y = y,
+                imageUri = selectedImageUri?.toString()
             )
 
             AppData.placedMarks.create(mark)
@@ -170,7 +179,8 @@ class AddEditActivity : AppCompatActivity() {
                 title = title,
                 description = description,
                 x = x,
-                y = y
+                y = y,
+                imageUri = selectedImageUri?.toString()
             )
 
             AppData.placedMarks.update(mark)
