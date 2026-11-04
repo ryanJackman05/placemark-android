@@ -47,28 +47,6 @@ class AddEditActivity : AppCompatActivity() {
         val cancelButton =
             findViewById<Button>(R.id.cancelButton)
 
-        editingId =
-            intent.getLongExtra("id", -1L) // fetch extra value named id, will be present if this activity was called from editMark
-                .takeIf { it != -1L } // takeif is a handy inline function for conditional yesOrNull returning
-
-        if (editingId != null) {
-            // Set to Edit mode
-            findViewById<TextView>(R.id.formTitle)
-                .text = "Edit Mark"
-
-            loadExistingMark(editingId!!)
-
-            Timber.d("Editing mark id=${editingId}")
-        }
-
-        saveButton.setOnClickListener {
-            saveMark()
-        }
-
-        cancelButton.setOnClickListener {
-            finish()
-        }
-
         imagePreview = findViewById(R.id.imageView)
         val imagePicker =
             registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri: Uri? ->
@@ -90,6 +68,28 @@ class AddEditActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.imageButton).setOnClickListener {
             imagePicker.launch(arrayOf("image/*"))
+        }
+
+        editingId =
+            intent.getLongExtra("id", -1L) // fetch extra value named id, will be present if this activity was called from editMark
+                .takeIf { it != -1L } // takeif is a handy inline function for conditional yesOrNull returning
+
+        if (editingId != null) {
+            // Set to Edit mode
+            findViewById<TextView>(R.id.formTitle)
+                .text = "Edit Mark"
+
+            loadExistingMark(editingId!!)
+
+            Timber.d("Editing mark id=${editingId}")
+        }
+
+        saveButton.setOnClickListener {
+            saveMark()
+        }
+
+        cancelButton.setOnClickListener {
+            finish()
         }
     }
 
