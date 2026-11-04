@@ -55,7 +55,7 @@
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="180dp"
-            android:scaleType="centerCrop"
+            android:maxHeight="250dp"
             tools:srcCompat="@tools:sample/avatars" />
 
         <Button
