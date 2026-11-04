@@ -154,23 +154,33 @@ class AddEditActivity : AppCompatActivity() {
         }
 
         if (editingId == null) {
+            try {
+                val mark = PlacemarkModel(
+                    title = title,
+                    description = description,
+                    x = x,
+                    y = y,
+                    imageUri = selectedImageUri?.toString()
+                )
 
-            val mark = PlacemarkModel(
-                title = title,
-                description = description,
-                x = x,
-                y = y,
-                imageUri = selectedImageUri?.toString()
-            )
+                mark.validate()
+                AppData.placedMarks.create(mark)
 
-            AppData.placedMarks.create(mark)
-            Timber.d("Created mark id=${mark.id}, title=${mark.title}")
+                Timber.d("Created mark id=${mark.id}, title=${mark.title}")
 
-            Toast.makeText(
-                this,
-                "Mark created",
-                Toast.LENGTH_SHORT
-            ).show()
+                Toast.makeText(
+                    this,
+                    "Mark created",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+            } catch (e: IllegalArgumentException) {
+                android.widget.Toast.makeText(
+                    this,
+                    e.message ?: "Please check the entered values.",
+                    android.widget.Toast.LENGTH_LONG
+                ).show()
+            }
 
         } else {
 
